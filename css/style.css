@@ -1,0 +1,878 @@
+/* =====================================================
+   Projeto Esperança — Tokens de identidade visual
+   Paleta: azul-marinho (confiança), azul médio (destaque),
+   verde (ação positiva) e neutros quentes (equilíbrio).
+   ===================================================== */
+:root {
+  --cor-marinho: #14304C;
+  --cor-marinho-escuro: #0D2138;
+  --cor-azul: #2E7DA6;
+  --cor-verde: #4C8C3C;
+  --cor-verde-escuro: #3B6E2E;
+  --cor-fundo: #F7F4EC;
+  --cor-fundo-alt: #ECE5D4;
+  --cor-texto: #22303C;
+  --cor-texto-claro: #4B5A66;
+  --cor-branco: #FFFFFF;
+  --cor-borda: #D9D2BE;
+
+  --fonte-destaque: Georgia, 'Iowan Old Style', 'Palatino Linotype', 'Times New Roman', serif;
+  --fonte-corpo: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+  --raio-suave: 4px;
+  --transicao: 0.2s ease;
+}
+
+/* ================= Reset básico ================= */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--fonte-corpo);
+  color: var(--cor-texto);
+  background-color: var(--cor-fundo);
+  line-height: 1.6;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3 {
+  font-family: var(--fonte-destaque);
+  color: var(--cor-marinho);
+  line-height: 1.25;
+  margin: 0 0 0.6em;
+}
+
+h1 { font-size: clamp(2rem, 4vw, 2.75rem); }
+h2 { font-size: clamp(1.5rem, 3vw, 2.1rem); }
+h3 { font-size: 1.25rem; }
+
+p {
+  max-width: 68ch;
+  margin: 0 0 1em;
+  color: var(--cor-texto-claro);
+}
+
+a {
+  color: var(--cor-azul);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+}
+
+a:hover {
+  color: var(--cor-marinho);
+}
+
+/* Foco visível em qualquer elemento interativo, essencial para acessibilidade */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid var(--cor-azul);
+  outline-offset: 2px;
+}
+
+.visualmente-oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.pular-conteudo {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  background: var(--cor-marinho);
+  color: var(--cor-branco);
+  padding: 0.6em 1em;
+  z-index: 100;
+  text-decoration: none;
+}
+
+.pular-conteudo:focus {
+  left: 0;
+}
+
+/* Arquitetura macroscópica: todo .container é uma grade de 12 colunas.
+   gap: 0 evita somar espaçamento extra ao das margens já existentes nos
+   elementos empilhados (h2, p etc.); componentes que precisam de duas
+   colunas (hero, voluntariado, projeto) declaram seu próprio gap abaixo,
+   que sobrescreve este valor normalmente pela cascata. */
+.container {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 0;
+}
+
+/* Por padrão, cada filho direto do container ocupa as 12 colunas
+   (equivalente ao empilhamento em bloco que já existia antes da grade).
+   Componentes específicos sobrescrevem este valor para ocupar frações
+   da grade — ver .hero__texto, .hero__imagem, .secao-voluntariado__*. */
+.container > * {
+  grid-column: 1 / -1;
+}
+
+.container--estreito {
+  max-width: 720px;
+}
+
+/* ================= Cabeçalho e navegação ================= */
+.cabecalho {
+  background-color: var(--cor-branco);
+  border-bottom: 1px solid var(--cor-borda);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.cabecalho__container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 0.9rem;
+  padding-bottom: 0.9rem;
+}
+
+.marca {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-decoration: none;
+}
+
+.marca__logo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.marca__nome {
+  font-family: var(--fonte-destaque);
+  font-size: 1.25rem;
+  color: var(--cor-marinho);
+}
+
+.botao-menu {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-suave);
+  cursor: pointer;
+}
+
+.botao-menu__linha {
+  display: block;
+  width: 20px;
+  height: 2px;
+  margin: 0 auto;
+  background-color: var(--cor-marinho);
+}
+
+.navegacao__lista {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+
+.navegacao__lista a {
+  text-decoration: none;
+  color: var(--cor-texto);
+  font-weight: 600;
+  padding: 0.3em 0;
+  border-bottom: 2px solid transparent;
+}
+
+.navegacao__lista a:hover,
+.navegacao__lista a[aria-current="page"] {
+  color: var(--cor-marinho);
+  border-bottom-color: var(--cor-verde);
+}
+
+/* ================= Botões ================= */
+.botao {
+  display: inline-block;
+  padding: 0.75em 1.6em;
+  border-radius: var(--raio-suave);
+  font-weight: 600;
+  text-decoration: none;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: background-color var(--transicao), color var(--transicao), border-color var(--transicao);
+}
+
+.botao--primario {
+  background-color: var(--cor-verde);
+  color: var(--cor-branco);
+}
+
+.botao--primario:hover {
+  background-color: var(--cor-verde-escuro);
+  color: var(--cor-branco);
+}
+
+.botao--secundario {
+  background-color: transparent;
+  color: var(--cor-marinho);
+  border-color: var(--cor-marinho);
+}
+
+.botao--secundario:hover {
+  background-color: var(--cor-marinho);
+  color: var(--cor-branco);
+}
+
+.botao--enviar {
+  font-size: 1.05rem;
+}
+
+/* ================= Hero ================= */
+.hero {
+  background-color: var(--cor-marinho);
+  padding: 4rem 0;
+}
+
+.hero__grade {
+  /* display e grid-template-columns já vêm de .container (12 colunas);
+     aqui só ajustamos gap e alinhamento próprios deste componente. */
+  gap: 3rem;
+  align-items: center;
+}
+
+.hero__texto {
+  grid-column: span 7;
+}
+
+.hero__imagem {
+  grid-column: span 5;
+}
+
+.hero__texto h1 {
+  color: var(--cor-branco);
+}
+
+.hero__texto p {
+  color: #D8E1E8;
+}
+
+.hero__acoes {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+}
+
+.hero .botao--secundario {
+  color: var(--cor-branco);
+  border-color: var(--cor-branco);
+}
+
+.hero .botao--secundario:hover {
+  background-color: var(--cor-branco);
+  color: var(--cor-marinho);
+}
+
+.hero__imagem img {
+  /* Recorte assimétrico para diferenciar da imagem retangular padrão */
+  border-radius: 60px 8px 60px 8px;
+  border: 6px solid var(--cor-azul);
+}
+
+/* ================= Seções gerais ================= */
+.secao {
+  padding: 3.5rem 0;
+}
+
+.secao--destacada {
+  background-color: var(--cor-fundo-alt);
+}
+
+.secao__conteudo--texto p:last-child {
+  margin-bottom: 0;
+}
+
+.secao-topo-pagina {
+  background-color: var(--cor-marinho);
+  padding: 3rem 0;
+}
+
+.secao-topo-pagina h1 {
+  color: var(--cor-branco);
+}
+
+.secao-topo-pagina p {
+  color: #D8E1E8;
+  margin: 0;
+}
+
+/* ================= Cartões de valores e doação ================= */
+.grade-cartoes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin: 1.5rem 0 2rem;
+}
+
+.cartao-valor,
+.cartao-doacao {
+  background-color: var(--cor-branco);
+  border-left: 4px solid var(--cor-azul);
+  padding: 1.4rem 1.5rem;
+}
+
+.cartao-valor--solidariedade { border-left-color: var(--cor-verde); }
+.cartao-valor--respeito { border-left-color: var(--cor-azul); }
+.cartao-valor--transparencia { border-left-color: var(--cor-marinho); }
+.cartao-valor--inclusao { border-left-color: var(--cor-verde-escuro); }
+
+.cartao-valor p,
+.cartao-doacao p {
+  margin-bottom: 0;
+}
+
+/* ================= Números institucionais ================= */
+.secao-numeros {
+  background-color: var(--cor-marinho-escuro);
+  padding: 3rem 0;
+  text-align: center;
+}
+
+.secao-numeros__aviso {
+  color: #A9BBC8;
+  font-size: 0.9rem;
+  margin: 0 0 1.5rem;
+}
+
+.lista-numeros {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1.5rem;
+  margin: 0;
+}
+
+.lista-numeros__item {
+  border-right: 1px solid #2A4A66;
+  padding: 0 1rem;
+}
+
+.lista-numeros__item:last-child {
+  border-right: none;
+}
+
+.lista-numeros dt {
+  font-family: var(--fonte-destaque);
+  font-size: 2.2rem;
+  color: var(--cor-branco);
+}
+
+.lista-numeros dd {
+  margin: 0.2rem 0 0;
+  color: #C7D4DE;
+}
+
+/* ================= Chamada para ação ================= */
+.secao-cta {
+  background-color: var(--cor-fundo-alt);
+  text-align: center;
+}
+
+.secao-cta__conteudo p {
+  margin: 0 auto 1.5rem;
+}
+
+/* ================= Contato ================= */
+.lista-contato {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+/* ================= Projetos (layout em zigue-zague) ================= */
+.lista-projetos {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.projeto {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.projeto__imagem {
+  grid-column: span 6;
+}
+
+.projeto__texto {
+  grid-column: span 6;
+}
+
+.projeto--invertido .projeto__imagem {
+  order: 2;
+}
+
+.projeto--invertido .projeto__texto {
+  order: 1;
+}
+
+.projeto__imagem img {
+  border-radius: 8px;
+}
+
+.projeto__texto p:last-of-type {
+  margin-bottom: 1.2rem;
+}
+
+/* ================= Voluntariado ================= */
+.secao-voluntariado__grade {
+  /* display e grid-template-columns já vêm de .container (12 colunas). */
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.secao-voluntariado__imagem {
+  grid-column: span 5;
+}
+
+.secao-voluntariado__texto {
+  grid-column: span 7;
+}
+
+.secao-voluntariado__imagem img {
+  border-radius: 8px;
+}
+
+.lista-voluntariado {
+  list-style: none;
+  margin: 1rem 0 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.lista-voluntariado li {
+  padding-left: 1.2rem;
+  border-left: 3px solid var(--cor-verde);
+  color: var(--cor-texto);
+}
+
+/* ================= Formulário de cadastro ================= */
+.formulario-cadastro fieldset {
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-suave);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.formulario-cadastro legend {
+  font-family: var(--fonte-destaque);
+  color: var(--cor-marinho);
+  font-size: 1.1rem;
+  padding: 0 0.4rem;
+}
+
+.campo {
+  margin-bottom: 1.1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.campo label {
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+}
+
+.campo input,
+.campo select,
+.campo textarea {
+  font: inherit;
+  padding: 0.6em 0.75em;
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-suave);
+  background-color: var(--cor-branco);
+  color: var(--cor-texto);
+}
+
+.campo input:invalid:not(:placeholder-shown),
+.campo select:invalid {
+  border-color: #B3452F;
+}
+
+.campo__ajuda {
+  font-size: 0.85rem;
+  color: var(--cor-texto-claro);
+  margin: 0.35rem 0 0;
+}
+
+.opcoes-checkbox {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.opcao-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.opcao-checkbox label {
+  font-weight: 400;
+  margin-bottom: 0;
+}
+
+.campo-termos {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  margin-bottom: 1.5rem;
+}
+
+.campo-termos label {
+  font-weight: 400;
+}
+
+.formulario-cadastro__feedback {
+  margin-top: 1rem;
+  font-weight: 600;
+}
+
+.formulario-cadastro__feedback:not(:empty) {
+  padding: 0.8em 1em;
+  border-radius: var(--raio-suave);
+  background-color: var(--cor-fundo-alt);
+  color: var(--cor-verde-escuro);
+}
+
+/* ================= Rodapé ================= */
+.rodape {
+  background-color: var(--cor-marinho-escuro);
+  color: #C7D4DE;
+  padding: 2rem 0;
+  text-align: center;
+}
+
+.rodape__conteudo p {
+  color: #C7D4DE;
+  margin: 0.2rem 0;
+  max-width: none;
+}
+
+/* ================= Componentes de feedback ================= */
+
+/* Badges: etiquetas curtas de categorização, usadas nos cartões de
+   projetos e de doação. As cores de fundo são geradas a partir das
+   variáveis já existentes (color-mix), então não introduzem uma nova
+   paleta — apenas uma versão bem clara das cores já usadas no projeto.
+   A declaração repetida em background-color é uma cor sólida de
+   reserva para navegadores sem suporte a color-mix(). */
+.badge {
+  display: inline-block;
+  margin-bottom: 0.6rem;
+  padding: 0.3em 0.85em;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.badge--verde {
+  background-color: var(--cor-fundo-alt);
+  background-color: color-mix(in srgb, var(--cor-verde) 18%, white);
+  color: var(--cor-verde-escuro);
+}
+
+.badge--azul {
+  background-color: var(--cor-fundo-alt);
+  background-color: color-mix(in srgb, var(--cor-azul) 18%, white);
+  color: var(--cor-marinho);
+}
+
+.badge--marinho {
+  background-color: var(--cor-fundo-alt);
+  background-color: color-mix(in srgb, var(--cor-marinho) 12%, white);
+  color: var(--cor-marinho);
+}
+
+/* Alertas: avisam o usuário sobre o estado de uma ação, como o envio
+   do formulário de cadastro. A cor de erro (#B3452F) já existia no
+   projeto, usada na borda de campos inválidos — foi só reaproveitada
+   aqui em vez de criar uma cor nova para o mesmo significado. */
+.alerta {
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-start;
+  padding: 0.9em 1.1em;
+  border: 1px solid transparent;
+  border-left-width: 4px;
+  border-radius: var(--raio-suave);
+  margin-bottom: 1.5rem;
+}
+
+.alerta p {
+  margin: 0;
+}
+
+.alerta--sucesso {
+  background-color: var(--cor-fundo-alt);
+  background-color: color-mix(in srgb, var(--cor-verde) 12%, white);
+  border-color: var(--cor-verde);
+  color: var(--cor-verde-escuro);
+}
+
+.alerta--info {
+  background-color: var(--cor-fundo-alt);
+  background-color: color-mix(in srgb, var(--cor-azul) 12%, white);
+  border-color: var(--cor-azul);
+  color: var(--cor-marinho);
+}
+
+.alerta--erro {
+  background-color: var(--cor-fundo-alt);
+  background-color: color-mix(in srgb, #B3452F 12%, white);
+  border-color: #B3452F;
+  color: #B3452F;
+}
+
+/* Botão discreto usado dentro de um alerta (ex.: limpar os cadastros
+   guardados no localStorage). Herda a cor do alerta que o contém, em
+   vez de definir uma cor própria. */
+.botao-limpar {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  font-weight: 700;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* Toast: notificação não obstrutiva, exibida após o envio do
+   formulário de cadastro. .toast--visivel controla a exibição real;
+   a transição de opacidade/posição é desativada automaticamente pela
+   regra de prefers-reduced-motion já existente no fim deste arquivo. */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 1.5rem;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  max-width: min(90vw, 420px);
+  padding: 0.9em 1em;
+  border-radius: var(--raio-suave);
+  background-color: var(--cor-marinho-escuro);
+  color: var(--cor-branco);
+  transform: translate(-50%, 16px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.toast--visivel {
+  opacity: 1;
+  transform: translate(-50%, 0);
+  pointer-events: auto;
+}
+
+.toast__mensagem {
+  margin: 0;
+}
+
+.toast__fechar {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  color: var(--cor-branco);
+  font-size: 1.2rem;
+  line-height: 1;
+  padding: 0.1em 0.35em;
+  cursor: pointer;
+}
+
+/* =====================================================
+   Responsividade — 5 breakpoints fixos (desktop-first,
+   em cascata: cada faixa mais estreita refina a anterior).
+   ===================================================== */
+
+/* 1280px — desktops e telas panorâmicas: pequenos ajustes de
+   espaçamento entre as colunas dos componentes de duas colunas,
+   preparando a transição para telas de notebook. */
+@media (max-width: 1280px) {
+  .hero__grade {
+    gap: 2.5rem;
+  }
+
+  .secao-voluntariado__grade,
+  .projeto {
+    gap: 2rem;
+  }
+}
+
+/* 1024px — notebooks e desktops menores: as colunas múltiplas são
+   preservadas, apenas o respiro vertical das seções é reduzido para
+   aproveitar melhor a largura disponível sem comprimir o conteúdo. */
+@media (max-width: 1024px) {
+  .secao {
+    padding: 3rem 0;
+  }
+
+  .hero {
+    padding: 3.5rem 0;
+  }
+}
+
+/* 768px — tablets: os componentes de duas colunas (hero, projetos e
+   voluntariado) passam a ocupar as 12 colunas inteiras, empilhando
+   imagem e texto verticalmente. O menu horizontal é mantido, pois os
+   três itens de navegação ainda cabem confortavelmente nesta largura. */
+@media (max-width: 768px) {
+  .hero__texto,
+  .hero__imagem,
+  .secao-voluntariado__imagem,
+  .secao-voluntariado__texto,
+  .projeto__imagem,
+  .projeto__texto {
+    grid-column: 1 / -1;
+  }
+
+  .projeto--invertido .projeto__imagem,
+  .projeto--invertido .projeto__texto {
+    order: initial;
+  }
+
+  .hero__imagem {
+    order: -1;
+  }
+
+  .secao {
+    padding: 2.5rem 0;
+  }
+}
+
+/* 600px — celulares maiores: ativa o menu mobile (sanduíche) e torna
+   os botões de chamada para ação de largura total, mais confortáveis
+   para toque. */
+@media (max-width: 600px) {
+  .botao-menu {
+    display: flex;
+  }
+
+  .navegacao {
+    display: none;
+    width: 100%;
+  }
+
+  .navegacao.aberto {
+    display: block;
+  }
+
+  .cabecalho__container {
+    flex-wrap: wrap;
+  }
+
+  .navegacao__lista {
+    flex-direction: column;
+    gap: 0;
+    padding: 1rem 0;
+  }
+
+  .navegacao__lista a {
+    display: block;
+    padding: 0.7em 0;
+  }
+
+  .hero__acoes .botao,
+  .secao-cta .botao,
+  .botao--enviar {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* 480px — celulares pequenos: os cartões (valores e doações) e os
+   números institucionais passam a um layout fixo, mais previsível do
+   que o auto-fit em telas muito estreitas, e os espaçamentos externos
+   são reduzidos ao mínimo confortável. */
+@media (max-width: 480px) {
+  .container {
+    padding: 0 1rem;
+  }
+
+  .grade-cartoes {
+    grid-template-columns: 1fr;
+  }
+
+  .lista-numeros {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .lista-numeros__item {
+    border-right: none;
+    border-bottom: 1px solid #2A4A66;
+    padding-bottom: 1rem;
+  }
+
+  .lista-numeros__item:last-child,
+  .lista-numeros__item:nth-last-child(2) {
+    border-bottom: none;
+  }
+
+  .secao-topo-pagina,
+  .hero {
+    padding: 2.5rem 0;
+  }
+
+  .toast {
+    left: 1rem;
+    right: 1rem;
+    max-width: none;
+    transform: translateY(16px);
+  }
+
+  .toast--visivel {
+    transform: translateY(0);
+  }
+}
+
+/* Respeita preferência do usuário por menos movimento */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  * {
+    transition: none !important;
+  }
+}

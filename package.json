@@ -1,0 +1,14 @@
+{
+  "name": "projeto-esperanca",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Site da ONG ficticia Projeto Esperanca - projeto academico",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^7.0.0"
+  }
+}

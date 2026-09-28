@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nossos projetos — Projeto Esperança</title>
+  <meta name="description" content="Conheça os projetos sociais do Projeto Esperança: Mesa Solidária, Caminhos para o Futuro e Rede de Apoio, além de nossas campanhas de doação e voluntariado.">
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+  <a class="pular-conteudo" href="#app">Pular para o conteúdo</a>
+
+  <header class="cabecalho">
+    <div class="cabecalho__container container">
+      <a href="index.html" class="marca" data-rota="inicio">
+        <img src="/imagens/logo.png" alt="Logotipo do Projeto Esperança" class="marca__logo">
+        <span class="marca__nome">Projeto Esperança</span>
+      </a>
+
+      <button class="botao-menu" id="botao-menu" aria-expanded="false" aria-controls="menu-principal">
+        <span class="botao-menu__linha"></span>
+        <span class="botao-menu__linha"></span>
+        <span class="botao-menu__linha"></span>
+        <span class="visualmente-oculto">Abrir menu de navegação</span>
+      </button>
+
+      <nav class="navegacao" id="menu-principal" aria-label="Navegação principal">
+        <ul class="navegacao__lista">
+          <li><a href="index.html" data-rota="inicio">Início</a></li>
+          <li><a href="projetos.html" data-rota="projetos">Projetos</a></li>
+          <li><a href="cadastro.html" data-rota="cadastro">Cadastro</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="app" data-rota-inicial="projetos">
+    <noscript>
+      <div class="container">
+        <div class="alerta alerta--info" role="note">
+          <p>Este site utiliza JavaScript para carregar o conteúdo. Ative o JavaScript no navegador para visualizá-lo.</p>
+        </div>
+      </div>
+    </noscript>
+  </main>
+
+  <footer class="rodape">
+    <div class="container rodape__conteudo">
+      <p>Projeto Esperança — Juntos, transformamos solidariedade em oportunidades.</p>
+      <p>&copy; 2026 Projeto Esperança. Projeto acadêmico desenvolvido para fins educacionais.</p>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true">
+    <p class="toast__mensagem" id="toast-mensagem"></p>
+    <button type="button" class="toast__fechar" id="toast-fechar" aria-label="Fechar notificação">&times;</button>
+  </div>
+
+  <script type="module" src="./js/script.js"></script>
+</body>
+</html>
