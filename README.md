@@ -1,63 +1,64 @@
-# Projeto Esperança — com Vite
+# Projeto Esperança
 
-## Estrutura de pastas
+Site institucional da **Projeto Esperança**, uma ONG fictícia criada para
+projeto acadêmico. A plataforma apresenta a missão da organização, seus
+projetos sociais e um formulário de cadastro para voluntários e doadores.
 
-    projeto-esperanca/
-    ├── index.html          <- página inicial
-    ├── projetos.html
-    ├── cadastro.html
-    ├── css/style.css
-    ├── js/script.js
-    ├── public/
-    │   └── imagens/        <- COLOQUE AQUI suas imagens
-    │       ├── logo.png
-    │       ├── banner.png
-    │       ├── projeto-1.png
-    │       ├── projeto-2.png
-    │       ├── projeto-3.png
-    │       └── voluntario.png
-    ├── package.json
-    └── vite.config.js
+## Funcionalidades
 
-> **Importante:** copie sua pasta `imagens/` (logo, banner, projeto-1/2/3,
-> voluntario) para dentro de `public/imagens/`. O Vite só copia para o
-> build o que está em `public/`.
+- **Página inicial** com apresentação da ONG, valores institucionais e
+  números ilustrativos de impacto
+- **Página de projetos** com detalhes das iniciativas (Mesa Solidária,
+  Caminhos para o Futuro e Rede de Apoio) e áreas de doação
+- **Formulário de cadastro** com validação nativa de campos, máscaras
+  automáticas (CPF, telefone e CEP) e persistência dos dados no
+  `localStorage` do navegador
+- **SPA com roteamento próprio**: navegação entre as três páginas sem
+  recarregar, com suporte a botão "voltar" do navegador
+- **Design responsivo** com 5 breakpoints e menu mobile
+- **Acessibilidade**: skip link, foco visível, ARIA labels,
+  `prefers-reduced-motion` e navegação por teclado
 
-## Como rodar
+## Tecnologias
 
-Requer [Node.js](https://nodejs.org) instalado (versão 18 ou superior).
+- HTML5 semântico
+- CSS3 (Grid Layout, Custom Properties, `color-mix`)
+- JavaScript (Vanilla JS, sem frameworks)
+- [Vite](https://vitejs.dev) como bundler e servidor de desenvolvimento
 
-```bash
-# 1. Entre na pasta do projeto
-cd projeto-esperanca
+## Como executar localmente
 
-# 2. Instale as dependências (cria node_modules)
-npm install
-
-# 3. Rode o servidor de desenvolvimento
-npm run dev
-```
-
-Acesse o endereço que aparecer no terminal (normalmente
-`http://localhost:5173`).
-
-## Build de produção
+Requer [Node.js](https://nodejs.org) 18+.
 
 ```bash
-npm run build      # gera a pasta dist/ otimizada (minificada)
-npm run preview    # serve a pasta dist/ para testar o build
+npm install     # instala as dependências
+npm run dev     # inicia o servidor de desenvolvimento
 ```
 
-## O que mudou em relação à versão sem bundler
+Para gerar a versão de produção (pasta `dist/`):
 
-1. **HTML na raiz** (antes estavam em `html/`): o Vite funciona melhor assim.
-2. **Caminhos relativos**: `../css/style.css` virou `./css/style.css`,
-   `../js/script.js` virou `./js/script.js`.
-3. **`<script type="module">`**: obrigatório para o Vite processar o JS.
-4. **Imagens em `public/imagens/`** e referenciadas como `/imagens/...`
-   (tanto no HTML quanto nos templates do `script.js`).
-5. **`vite.config.js`** declara as 3 páginas como entradas do build
-   (multi-page app).
+```bash
+npm run build
+npm run preview
+```
 
-O `style.css` e a lógica do `script.js` não foram alterados — só os
-caminhos das imagens.
+## Estrutura do projeto
+
+    ├── index.html          Página inicial
+    ├── projetos.html       Projetos e doações
+    ├── cadastro.html       Formulário de cadastro
+    ├── css/style.css       Estilos (tokens, layout, responsividade)
+    ├── js/script.js        Templates, roteamento, máscaras e formulário
+    ├── public/imagens/     Imagens do site
+    └── vite.config.js      Configuração do Vite (multi-page app)
+
+## Deploy
+
+O site está hospedado na Vercel e é atualizado automaticamente a cada
+push na branch `main`.
+
+## Aviso
+
+Projeto fictício desenvolvido para fins educacionais. Os dados do
+formulário são armazenados apenas no navegador do usuário e não são
+enviados a nenhum servidor.
